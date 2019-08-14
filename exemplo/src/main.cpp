@@ -5,10 +5,6 @@
 
 #include "nrf.h"
 
-// #include "nrf_gpio.h"
-// #include "nrf_drv_rtc.h"
-// #include "nrf_drv_clock.h"
-
 BLEPeripheral blePeripheral = BLEPeripheral();
 BLEService ledService = BLEService("19b10000e8f2537e4f6cd104768a1214");
 BLECharCharacteristic switchCharacteristic = BLECharCharacteristic("19b10001e8f2537e4f6cd104768a1214", BLERead | BLEWrite);

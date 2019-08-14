@@ -1,0 +1,6 @@
+[submodule "blackmagic"]
+	path = blackmagic
+	url = https://github.com/blacksphere/blackmagic
+[submodule "platform-nordicnrf52"]
+	path = platform-nordicnrf52
+	url = https://github.com/platformio/platform-nordicnrf52
