@@ -1,6 +1,0 @@
-https://infocenter.nordicsemi.com/index.jsp?topic=%2Fstruct_nrf5gs%2Fstruct%2Fnrf5gs.html&cp=1
-
-https://devzone.nordicsemi.com/f/nordic-q-a/21415/flashing-nrf52832-chip-with-st-link-v2/83987#83987
-
-https://www.segger.com/products/debug-probes/j-link/models/other-j-links/st-link-on-board/
-
