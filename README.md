@@ -101,24 +101,64 @@ $ pio run -t upload
 
 ### JLINK
 
-Baixar o Jlink Commander <a href="https://www.segger.com/downloads/jlink/JLink_Linux_x86_64.deb" target="_blank">aqui</a>.
+Realizar a montagem do hardware como segue 
 
-Após finalizar o download, instalar o pacote com o seguinte:
+<p align="center"><img src="https://i.imgur.com/ODUd2cV.png"></p>
+
+Baixar o Jlink Commander <a href="https://www.segger.com/downloads/jlink/JLink_Linux_x86_64.deb" target="_blank">aqui</a> e instalar o pacote com o seguinte:
 ```bash
 $ sudo dpkg -i nome_pacote_jlink.deb
 ```
+
+Baixar o SDK da Nordic <a href="https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK" target="_blank">aqui</a>, após o download extraia o arquivo em seu local de preferência.
+
+Instalar o seguinte pacote
+```bash
+$ sudo apt-get install gcc-arm-none-eabi
+```
+
+Abra o arquivo que se encontra em PATH_NRF5_SDK/components/toolchain/gcc/Makefile.posix
+
+Edite para parecer como mostra abaixo
+
+```bash
+GNU_INSTALL_ROOT ?= /usr/bin/
+GNU_VERSION ?= 7.3.1
+GNU_PREFIX ?= arm-none-eabi
+```
+
+Se o arm-none-eabi-gcc foi instalado com sucesso, você pode verificar seu local de  com 
+```bash
+$ which arm-none-eabi-gcc
+```
+A versão pode ser verificada com
+```bash
+$ arm-none-eabi-gcc --version
+```
+O prefixo será o mesmo do exemplo acima
+
 Caso esteja instalado com sucesso, pluge o JLink conectado com o SKB501 no computador e execute o seguinte
 
 ```bash
 $ JLinkExe
+$ device NRF52832_XXAA
 $ si SWD
 $ speed 4000
 $ connect
 $ erase
-$ load
+$ loadfile s132_nrf52_4.0.4_softdevice.hex ble_app_blinky_pca10040_s132.hex
+$ r
+$ go
 ```
 
-### JTAG 
+* O arquivo **s132_nrf52_4.0.4_softdevice.hex** é refente ao softdevice utilizado para comunicação BLE, o mesmo pode ser encontrar <a href="https://www.nordicsemi.com/Software-and-Tools/Software/S132/Download#infotabs" target="_blank">aqui</a>
+* O arquivo **ble_app_blinky_pca10040_s132.hex** é um exemplo BLE disponível no repositório do <a href="https://www.nordicsemi.com/Software-and-tools/Software/nRF5-SDK" target="_blank">nRF5 SDK</a>
+
+
+
+Abaixo segue alguns comandos úteis durante a utilização do JLink Commander
+
+#### JTAG 
 
 | Command   | Syntax                                                    | Description                                       |
 |-----------|-----------------------------------------------------------|---------------------------------------------------|
@@ -131,7 +171,7 @@ $ load
 | wjraw     | wjraw <NumBits(dec)>, `<tms>`, `<tdi>`                    | Write Raw JTAG data.                              |
 | rt        |                                                           | Reset TAP Controller (nTRST)                      |
 
-### Configuração
+#### Configuração
 
 | Command       | Syntax                                                                                                        | Description                                                           |
 |---------------|---------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
@@ -149,7 +189,7 @@ $ load
 | ShowEmuList   | ShowEmuList [`<Interface0>` `<Interface1>` ...]                                                               | Shows a list of all emulators which are connected to the host.                                                                                                                                                    The interface to search on, can be specified.                         |
 | VTREF         | VTREF `<ValuemV>`                                                                                             | Sets a fixed value for VTref on J-Link.                               |
 
-### Comandos Gerais
+#### Comandos Gerais
 
 | Command     | Syntax                                                                                                                                    | Description                                     |
 |-------------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
@@ -163,7 +203,7 @@ $ load
 | q           |                                                                                                                                           | Quit                                            |
 | qc          |                                                                                                                                           | Close JLink connection and quit                 |
 
-### SWO 
+#### SWO 
 
 | Command   | Description               |
 |-----------|---------------------------|
