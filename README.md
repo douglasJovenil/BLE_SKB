@@ -118,21 +118,6 @@ $ erase
 $ load
 ```
 
-
-### SWO 
-
-| Command   | Description               |
-|-----------|---------------------------|
-| SWOSpeed  | Show supported speeds     |
-| SWOStart  | Start                     |
-| SWOStop   | Stop                      |
-| SWOStat   | Display SWO status        |
-| SWORead   | Read and display SWO data |
-| SWOShow   | Read and analyze SWO data |
-| SWOFlush  | Flush data                |
-| SWOView   | View terminal data        |
-
-
 ### JTAG 
 
 | Command   | Syntax                                                    | Description                                       |
@@ -145,21 +130,6 @@ $ load
 | RTAP      |                                                           | Reset TAP Controller using state machine (111110) |
 | wjraw     | wjraw <NumBits(dec)>, `<tms>`, `<tdi>`                    | Write Raw JTAG data.                              |
 | rt        |                                                           | Reset TAP Controller (nTRST)                      |
-
-
-### Comandos Gerais
-
-| Command     | Syntax                                                                                                                                    | Description                                     |
-|-------------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| hwinfo      |                                                                                                                                           | Show hardware info                              | 
-| st          |                                                                                                                                           | Show hardware status                            | 
-| erase       | Erase                                                                                                                                     | Erase internal flash of selected device.        |
-| loadfile    | loadfile `<filename>`, [`<addr>`] Supported extensions: *.bin, *.mot, *.hex, *.srec `<addr>` is needed for bin files only.                | Load data file into target memory.              |
-| loadbin     | loadbin `<filename>`, `<addr>`                                                                                                            | Load *.bin file into target memory.             |
-| g           |                                                                                                                                           | go                                              |
-| savebin     | savebin `<filename>`, `<addr>`, `<NumBytes>`                                                                                              | Saves target memory into binary file.           |
-| q           |                                                                                                                                           | Quit                                            |
-| qc          |                                                                                                                                           | Close JLink connection and quit                 |
 
 ### Configuração
 
@@ -178,3 +148,30 @@ $ load
 | selemu        | selemu [`<Interface0>` `<Interface1>` ...]                                                                    | Select a emulator to communicate with, from a list of all emulators                                                                                                                                               which are connected to the host The interfaces to search on,                                                                                                                                                      can be specified                                                      |
 | ShowEmuList   | ShowEmuList [`<Interface0>` `<Interface1>` ...]                                                               | Shows a list of all emulators which are connected to the host.                                                                                                                                                    The interface to search on, can be specified.                         |
 | VTREF         | VTREF `<ValuemV>`                                                                                             | Sets a fixed value for VTref on J-Link.                               |
+
+### Comandos Gerais
+
+| Command     | Syntax                                                                                                                                    | Description                                     |
+|-------------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| hwinfo      |                                                                                                                                           | Show hardware info                              | 
+| st          |                                                                                                                                           | Show hardware status                            | 
+| erase       | Erase                                                                                                                                     | Erase internal flash of selected device.        |
+| loadfile    | loadfile `<filename>`, [`<addr>`] Supported extensions: *.bin, *.mot, *.hex, *.srec `<addr>` is needed for bin files only.                | Load data file into target memory.              |
+| loadbin     | loadbin `<filename>`, `<addr>`                                                                                                            | Load *.bin file into target memory.             |
+| g           |                                                                                                                                           | go                                              |
+| savebin     | savebin `<filename>`, `<addr>`, `<NumBytes>`                                                                                              | Saves target memory into binary file.           |
+| q           |                                                                                                                                           | Quit                                            |
+| qc          |                                                                                                                                           | Close JLink connection and quit                 |
+
+### SWO 
+
+| Command   | Description               |
+|-----------|---------------------------|
+| SWOSpeed  | Show supported speeds     |
+| SWOStart  | Start                     |
+| SWOStop   | Stop                      |
+| SWOStat   | Display SWO status        |
+| SWORead   | Read and display SWO data |
+| SWOShow   | Read and analyze SWO data |
+| SWOFlush  | Flush data                |
+| SWOView   | View terminal data        |
