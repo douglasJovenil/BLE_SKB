@@ -97,8 +97,6 @@ lib_deps = ${common.lib_deps}
 $ pio run -t upload
 ```
 
-################### END Programando ###################
-
 ### JLINK
 
 Realizar a montagem do hardware como segue 
