@@ -111,176 +111,70 @@ Caso esteja instalado com sucesso, pluge o JLink conectado com o SKB501 no compu
 
 ```bash
 $ JLinkExe
-
+$ si SWD
+$ speed 4000
+$ connect
+$ erase
+$ load
 ```
 
 
-## Comandos Gerais
+### SWO 
 
-| Command         | Syntax                                                                                                                                    | Description                                     |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| f               |                                                                                                                                           | Firmware info                                   |
-| h               |                                                                                                                                           | halt                                            |
-| IsHalted        |                                                                                                                                           | Returns the current CPU state (halted / running)|
-| WaitHalt        |  WaitHalt `<TimeoutMs>`                                                                                                                   | Waits until the CPU is halted or the given.                                                                                                                                                                       timeout is exceeded. Default timeout is 1000 ms |
-| g               |                                                                                                                                           | go                                              |
-| Sleep           | Sleep `<delay>`                                                                                                                           | Waits the given time (in milliseconds).         |
-| s               | s [<NumSteps (dec)>]                                                                                                                      | Single step the target chip.                    |
-| st              |                                                                                                                                           | Show hardware status                            | 
-| hwinfo          |                                                                                                                                           | Show hardware info                              | 
-| mem             | mem  [`<Zone>`:]`<Addr>`, `<NumBytes>` (hex)                                                                                              | Read memory.                                    |
-| mem8            | mem8  [`<Zone>`:]`<Addr>`, `<NumBytes>` (hex)                                                                                             | Read  8-bit items.                              |
-| mem16           | mem16 [`<Zone>`:]`<Addr>`, `<NumItems>` (hex)                                                                                             | Read 16-bit items.                              |
-| mem32           | mem32 [`<Zone>`:]`<Addr>`, `<NumItems>` (hex)                                                                                             | Read 32-bit items.                              |
-| w1              | w1 [`<Zone>`:]`<Addr>`, `<Data>` (hex)                                                                                                    | Write  8-bit items.                             |
-| w2              | w2 [`<Zone>`:]`<Addr>`, `<Data>` (hex)                                                                                                    | Write 16-bit items.                             |
-| w4              | w4 [`<Zone>`:]`<Addr>`, `<Data>` (hex)                                                                                                    | Write 32-bit items.                             |
-| erase           | Erase                                                                                                                                     | Erase internal flash of selected device.        |
-| wm              | wm `<NumWords>`                                                                                                                           | Write test words.                               |
-| is              |                                                                                                                                           | Identify length of scan chain select register   |
-| ms              | ms <Scan chain>                                                                                                                           | Measure length of scan chain.                   |
-| mr              | mr                                                                                                                                        | Measure RTCK react time.                        |
-| q               |                                                                                                                                           | Quit                                            |
-| qc              |                                                                                                                                           | Close JLink connection and quit                 |
-| r               |                                                                                                                                           | Reset target         (RESET)                    |
-| rx              | rx `<DelayAfterReset>`                                                                                                                    | Reset target         (RESET).                   |
-| RSetType        | RSetType `<type>`                                                                                                                         | Set the current reset type.                     |
-| Regs            |                                                                                                                                           | Display contents of registers                   |
-| wreg            | wreg `<RegName>`, `<Value>`                                                                                                               | Write register.                                 |
-| moe             |                                                                                                                                           | Shows why CPU is halted                         |
-| SetBP           |  SetBP `<addr>` [A/T] [S/H]                                                                                                               | Set breakpoint.                                 |
-| SetWP           | `<Addr>` [R/W] [`<Data>` [<D-Mask>] [A-Mask]]                                                                                             | Set Watchpoint.                                 |
-| ClrBP           |  ClrBP  `<BP_Handle>`                                                                                                                     | Clear breakpoint.                               |
-| ClrWP           |  ClrWP  `<WP_Handle>`                                                                                                                     | Clear watchpoint.                               |
-| VCatch          | VCatch `<Value>`                                                                                                                          | Write vector catch.                             |
-| **loadfile**    | loadfile `<filename>`, [`<addr>`] Supported extensions: *.bin, *.mot, *.hex, *.srec `<addr>` is needed for bin files only.                | Load data file into target memory.              |
-| **loadbin**     | loadbin `<filename>`, `<addr>`                                                                                                            | Load *.bin file into target memory.             |
-| savebin         | savebin `<filename>`, `<addr>`, `<NumBytes>`                                                                                              | Saves target memory into binary file.           |
-| verifybin       | verifybin `<filename>`, `<addr>`                                                                                                          | Verfies if the specified binary is already in the                                                                                                                                                                 target memory at the specified address.         |
-| SetPC           | SetPC `<Addr>`                                                                                                                            | Set the PC to specified value.                  |
-| le              |                                                                                                                                           | Change to little endian mode                    |
-| be              |                                                                                                                                           | Change to big endian mode                       |
-| log             | log `<filename>`                                                                                                                          | Enables log to file.                            |
-| unlock          | unlock `<DeviceName>` Type unlock without `<DeviceName>` to get a list of supported device names. nRESET has to be connected              | Unlocks a device.                               |
-| term            |                                                                                                                                           | Test command to visualize printf output from the                                                                                                                                                                  target device, using DCC (SEGGER DCC handler                                                                                                                                                                      running on target)                              |
-| ReadAP          |                                                                                                                                           | Reads a CoreSight AP register. Note: First read                                                                                                                                                                   returns the data of the previous read. An                                                                                                                                                                         additional read of DP reg 3 is necessary to get                                                                                                                                                                   the data.                                       |
-| ReadDP          |                                                                                                                                           | Reads a CoreSight DP register. Note: For SWD data                                                                                                                                                                 is returned immediately. For JTAG the data of the                                                                                                                                                                 previous read is returned. An additional read of                                                                                                                                                                  DP reg 3 is necessary to get the data.          |
-| WriteAP         |                                                                                                                                           | Writes a CoreSight AP register.                 |
-| WriteDP         |                                                                                                                                           | Writes a CoreSight DP register.                 |
-| SWDSelect       |                                                                                                                                           | Selects SWD as interface and outputs the JTAG ->                                                                                                                                                                  SWD switching sequence.                         |
-| SWDReadAP       |                                                                                                                                           | Reads a CoreSight AP register via SWD. Note:                                                                                                                                                                      First read returns the data of the previous read.                                                                                                                                                                 An additional read of DP reg 3 is necessary to                                                                                                                                                                    get the data.                                   |
-| SWDReadDP       |                                                                                                                                           | Reads a CoreSight DP register via SWD. Note:                                                                                                                                                                      Correct data is returned immediately.           |
-| SWDWriteAP      |                                                                                                                                           | Writes a CoreSight AP register via SWD.         |
-| SWDWriteDP      |                                                                                                                                           | Writes a CoreSight DP register via SWD.         |
-| Device          |                                                                                                                                           | Selects a specific device J-Link shall connect to                                                                                                                                                                 and performs a reconnect. In most cases explicit                                                                                                                                                                  selection of the device is not necessary.                                                                                                                                                                         Selecting a device enables the user to make use                                                                                                                                                                   of the J-Link flash programming functionality as                                                                                                                                                                  well as using unlimited breakpoints in flash                                                                                                                                                                      memory. For some devices explicit device                                                                                                                                                                          selection is mandatory in order to allow the DLL                                                                                                                                                                  to perform special handling needed by the device|
-|   ExpDevList      | ExpDevList `<filename>`                                                                                                                 | Exports the device names from the DLL internal                                                                                                                                                                    device list to a text file.                     |
-|   ExpDevListXML   | ExpDevListXML `<Filename>`                                                                                                              | Exports the device names from the DLL internal                                                                                                                                                                    device list to a text file in XML format.       |
-|   PowerTrace      | PowerTrace `<LogFile>` [`<ChannelMask>` `<RefCountSel>`] `<LogFile>`: File to store power trace data to `<ChannelMask>`: 32-bit mask to specify what channels shall be enabled `<SampleFreq>`: Sampling frequency  Hz (0 == max) `<RefCountSel>`:       0: No reference count 1: Number of bytes transmitted on SWO                          | Perform power trace (not supported by all models|
-
-## CP15
-
-| Command 
-rce        Read CP15.  Syntax: rce `<Op1>`, `<CRn>`, `<CRm>`, `<Op2>`
-wce        Write CP15. Syntax: wce `<Op1>`, `<CRn>`, `<CRm>`, `<Op2>`, `<Data>`
----- ICE -------------
-Ice        Show state of the embedded ice macrocell (ICE breaker)
-ri         Read Ice reg.  Syntax: ri `<RegIndex>`(hex)
-wi         Write Ice reg. Syntax: wi `<RegIndex>`, `<Data>`(hex)
----- TRACE -----------
-TClear     TRACE - Clear buffer
-TSetSize   TRACE - Set Size of trace buffer
-TSetFormat TRACE - SetFormat
-TSR        TRACE - Show Regions (and analyze trace buffer)
-TStart     TRACE - Start
-TStop      TRACE - Stop
----- SWO -------------
-SWOSpeed   SWO - Show supported speeds
-SWOStart   SWO - Start
-SWOStop    SWO - Stop
-SWOStat    SWO - Display SWO status
-SWORead    SWO - Read and display SWO data
-SWOShow    SWO - Read and analyze SWO data
-SWOFlush   SWO - Flush data
-SWOView    SWO - View terminal data
----- PERIODIC --------
-PERConf    PERIODIC - Configure
-PERStart   PERIODIC - Start
-PERStop    PERIODIC - Stop
-PERStat    PERIODIC - Display status
-PERRead    PERIODIC - Read and display data
-PERShow    PERIODIC - Read and analyze data
----- File I/O --------
-fwrite     Write file to emulator
-fread      Read file from emulator
-fshow      Read and display file from emulator
-fdelete    Delete file on emulator
-fsize      Display size of file on emulator
-flist      List directory on emulator
-SecureArea Creates/Removes secure area on probe
----- Test ------------
-TestHaltGo   Run go/halt 1000 times
-TestStep     Run step 1000 times
-TestCSpeed   Measure CPU speed.
-             Parameters: [`<RAMAddr>`]
-TestWSpeed   Measure download speed into target memory.
-             Parameters:  [`<Addr>` [`<Size>`]]
-TestRSpeed   Measure upload speed from target memory.
-             Parameters: [`<Addr>` [`<Size>`] [`<NumBlocks>`]]
-TestNWSpeed  Measure network download speed.
-             Parameters: [`<NumBytes>` [`<NumReps>`]]
-TestNRSpeed  Measure network upload speed.
-             Parameters: [`<NumBytes>` [`<NumReps>`]]
----- JTAG ------------
-JTAGConf   Set number of IR/DR bits before ARM device.
-             Syntax: Config `<IRpre>`, `<DRpre>`
-speed      Set target interface speed. Syntax: speed `<freq>`|auto|adaptive, e.g. speed 2000, speed a
-i          Read JTAG Id (Host CPU)
-wjc        Write JTAG command (IR). Syntax: wjc `<Data>`(hex)
-wjd        Write JTAG data (DR). Syntax: wjd `<Data64>`(hex), `<NumBits>`(dec)
-RTAP       Reset TAP Controller using state machine (111110)
-wjraw      Write Raw JTAG data. Syntax: wjraw <NumBits(dec)>, `<tms>`, `<tdi>`
-rt         Reset TAP Controller (nTRST)
----- JTAG-Hardware ---
-c00        Create clock with TDI = TMS = 0
-c          Clock
-tck0       Clear TCK
-tck1       Set   TCK
-0          Clear TDI
-1          Set   TDI
-t0         Clear TMS
-t1         Set   TMS
-trst0      Clear TRST
-trst1      Set   TRST
-r0         Clear RESET
-r1         Set   RESET
----- Connection ------
-usb        Connect to J-Link via USB.  Syntax: usb `<port>`, where port is 0..3
-ip         Connect to J-Link ARM Pro or J-Link TCP/IP Server via TCP/IP.
-           Syntax: ip `<ip_addr>`
----- Configuration ---
-si         Select target interface. Syntax: si `<Interface>`,
-           where `<Interface>` can be any supported target interface (e.g SWD, JTAG, ICSP, FINE, ...
-power      Switch power supply for target. Syntax: power `<State>` [perm],
-           where State is either On or Off. Example: power on perm
-wconf      Write configuration byte. Syntax: wconf `<offset>`, `<data>`
-rconf      Read configuration bytes. Syntax: rconf
-license    Shows a list of all available license commands
-ipaddr     Show/Assign IP address and subnetmask of/to the connected J-Link.
-gwaddr     Show/Assign network gateway address of/to the connected J-Link.
-dnsaddr    Show/Assign network DNS server address of/to the connected J-Link.
-conf       Show configuration of the connected J-Link.
-calibrate  Calibrate the target current measurement.
-selemu     Select a emulator to communicate with,
-           from a list of all emulators which are connected to the host
-           The interfaces to search on, can be specified
-             Syntax: selemu [`<Interface0>` `<Interface1>` ...]
-ShowEmuList Shows a list of all emulators which are connected to the host.
-            The interfaces to search on, can be specified.
-             Syntax: ShowEmuList [`<Interface0>` `<Interface1>` ...]
-VTREF       Sets a fixed value for VTref on J-Link.
-              Syntax: VTREF `<ValuemV>`
+| Command   | Description               |
+|-----------|---------------------------|
+| SWOSpeed  | Show supported speeds     |
+| SWOStart  | Start                     |
+| SWOStop   | Stop                      |
+| SWOStat   | Display SWO status        |
+| SWORead   | Read and display SWO data |
+| SWOShow   | Read and analyze SWO data |
+| SWOFlush  | Flush data                |
+| SWOView   | View terminal data        |
 
 
-| Nome      | Idade | 
-|-----------|-------|
-| Douglas   | 10    |
+### JTAG 
+
+| Command   | Syntax                                                    | Description                                       |
+|-----------|-----------------------------------------------------------|---------------------------------------------------|
+| JTAGConf  | Config `<IRpre>`, `<DRpre>`                               | Set number of IR/DR bits before ARM device.       |
+| speed     | speed `<freq>`|auto|adaptive, e.g. speed 2000, speed a    | Set target interface speed.                       |
+| i         |                                                           | Read JTAG Id (Host CPU)                           |
+| wjc       | wjc `<Data>`(hex)                                         | Write JTAG command (IR).                          |    
+| wjd       | wjd `<Data64>`(hex), `<NumBits>`(dec)                     | Write JTAG data (DR).                             |
+| RTAP      |                                                           | Reset TAP Controller using state machine (111110) |
+| wjraw     | wjraw <NumBits(dec)>, `<tms>`, `<tdi>`                    | Write Raw JTAG data.                              |
+| rt        |                                                           | Reset TAP Controller (nTRST)                      |
+
+
+### Comandos Gerais
+
+| Command     | Syntax                                                                                                                                    | Description                                     |
+|-------------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| hwinfo      |                                                                                                                                           | Show hardware info                              | 
+| st          |                                                                                                                                           | Show hardware status                            | 
+| erase       | Erase                                                                                                                                     | Erase internal flash of selected device.        |
+| loadfile    | loadfile `<filename>`, [`<addr>`] Supported extensions: *.bin, *.mot, *.hex, *.srec `<addr>` is needed for bin files only.                | Load data file into target memory.              |
+| loadbin     | loadbin `<filename>`, `<addr>`                                                                                                            | Load *.bin file into target memory.             |
+| g           |                                                                                                                                           | go                                              |
+| savebin     | savebin `<filename>`, `<addr>`, `<NumBytes>`                                                                                              | Saves target memory into binary file.           |
+| q           |                                                                                                                                           | Quit                                            |
+| qc          |                                                                                                                                           | Close JLink connection and quit                 |
+
+### Configuração
+
+| Command       | Syntax                                                                                                        | Description                                                           |
+|---------------|---------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| si            | si `<Interface>`, where `<Interface>` can be any supported target interface (e.g SWD, JTAG, ICSP, FINE, ...   | Select target interface.                                              |
+| power         | power `<State>` [perm], where State is either On or Off. Example: power on perm                               | Switch power supply for target.                                       |
+| wconf         | wconf `<offset>`, `<data>`                                                                                    | Write configuration byte.                                             |
+| rconf         | rconf                                                                                                         | Read configuration bytes.                                             |
+| license       |                                                                                                               | Shows a list of all available license commands                        |
+| ipaddr        |                                                                                                               | Show/Assign IP address and subnetmask of/to the connected J-Link.     |
+| gwaddr        |                                                                                                               | Show/Assign network gateway address of/to the connected J-Link.       |
+| dnsaddr       |                                                                                                               | Show/Assign network DNS server address of/to the connected J-Link.    |
+| conf          |                                                                                                               | Show configuration of the connected J-Link.                           |
+| calibrate     |                                                                                                               | Calibrate the target current measurement.                             |
+| selemu        | selemu [`<Interface0>` `<Interface1>` ...]                                                                    | Select a emulator to communicate with, from a list of all emulators                                                                                                                                               which are connected to the host The interfaces to search on,                                                                                                                                                      can be specified                                                      |
+| ShowEmuList   | ShowEmuList [`<Interface0>` `<Interface1>` ...]                                                               | Shows a list of all emulators which are connected to the host.                                                                                                                                                    The interface to search on, can be specified.                         |
+| VTREF         | VTREF `<ValuemV>`                                                                                             | Sets a fixed value for VTref on J-Link.                               |
