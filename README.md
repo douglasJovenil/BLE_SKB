@@ -101,7 +101,7 @@ $ pio run -t upload
 
 Realizar a montagem do hardware como segue 
 
-<p align="center"><img src="https://i.imgur.com/ODUd2cV.png"></p>
+<p align="center"><img src="https://i.imgur.com/YesQOCq.png"></p>
 
 Baixar o Jlink Commander <a href="https://www.segger.com/downloads/jlink/JLink_Linux_x86_64.deb" target="_blank">aqui</a> e instalar o pacote com o seguinte:
 ```bash
@@ -135,18 +135,31 @@ $ arm-none-eabi-gcc --version
 ```
 O prefixo será o mesmo do exemplo acima
 
-Caso esteja instalado com sucesso, pluge o JLink conectado com o SKB501 no computador e execute o seguinte
+Como utilizaremos um exemplo com bluetooth, navegue até **PATH_NRF5_SDK/cexamples/ble_peripheral/ble_app_template** copie e cole esse projeto com um nome de sua preferência em **PATH_NRF5_SDK/examples/ble_peripheral**
+
+Abra a pasta e edite o arquivo **main.c** de acordo com suas necessidades.
+
+Para compilar devemos utilizar o código compatível com o do **SKB501** que utiliza o micro **nRF52840**, que no caso é a placa **pca10056**, portanto dentro da pasta do projeto navegue utilizando o terminal até **PATH_PASTA_PROJETO/pca10056/s140/armgcc/** e execute 
+```bash
+$ make
+```
+Se tudo ocorrer bem, irá aparecer uma pasta chamada **_build** e dentro dela um arquivo chamado **nrf52840_xxaa.hex**.
+
+Como para utilizar o BLE é necessário um firmware chamado **softdevice** deve instalar este, para fazer isso esse o modo mais fácil é fazendo upload de um exemplo pronto, que irá armazenar o softdevice em uma região de memória do micro e o programa em outro, sendo assim, depois da primeira gravação podemos trabalhar apenas no programa que estamos desenvolvendo. Navegue até **PATH_NRF5_SDK/cexamples/ble_peripheral/ble_app_template/hex/** e copie o arquivo referente a placa que estamos programando no caso **ble_app_template_pca10056_s140.hex** e cole na pasta **_build**, com isso entre na pasta **_build** e execute
 
 ```bash
 $ JLinkExe
-$ device NRF52832_XXAA
+$ device NRF52840_XXAA
 $ si SWD
 $ speed 4000
 $ connect
 $ erase
-$ loadfile s132_nrf52_4.0.4_softdevice.hex ble_app_blinky_pca10040_s132.hex
+$ loadfile ble_app_template_pca10056_s140.hex
 $ r
-$ go
+$ loadfile nrf52840_xxaa.hex
+$ r
+$ g
+$ q
 ```
 
 * O arquivo **s132_nrf52_4.0.4_softdevice.hex** é refente ao softdevice utilizado para comunicação BLE, o mesmo pode ser encontrar <a href="https://www.nordicsemi.com/Software-and-Tools/Software/S132/Download#infotabs" target="_blank">aqui</a>
