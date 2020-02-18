@@ -19,7 +19,7 @@ Instalar o seguinte
 $ sudo apt-get install gcc-arm-none-eabi libnewlib-arm-none-eabi -y
 ```
 
-Abra o arquivo que se encontra em PATH_NRF5_SDK/components/toolchain/gcc/Makefile.posix
+Abra o arquivo que se encontra em **PATH_NRF5_SDK/components/toolchain/gcc/Makefile.posix**
 
 Edite para parecer como mostra abaixo
 
@@ -52,7 +52,7 @@ $ make
 ```
 Se tudo ocorrer bem, irá aparecer uma pasta chamada **_build** e dentro dela um arquivo chamado **nrf52840_xxaa.hex**.
 
-Como para utilizar o BLE é necessário um firmware chamado **softdevice** devemos instalar este, para fazer isso esse o modo mais fácil é fazendo upload de um exemplo do nRF5 SDK, que irá armazenar o softdevice em uma região de memória do micro e o programa em outro, sendo assim, depois da primeira gravação podemos trabalhar apenas no programa que estamos desenvolvendo. Navegue até **PATH_NRF5_SDK/examples/ble_peripheral/ble_app_template/hex/** e copie o arquivo referente a placa que estamos programando no caso **ble_app_template_pca10056_s140.hex** e cole na pasta **_build**, com isso entre na pasta pelo terminal **_build** e execute
+Como para utilizar o BLE é necessário um firmware chamado **softdevice** devemos instalar este, para fazer isso esse o modo mais fácil é fazendo upload de um exemplo do nRF5 SDK, que irá armazenar o softdevice em uma região de memória do micro e o programa em outro, sendo assim, depois da primeira gravação podemos trabalhar apenas no programa que estamos desenvolvendo. Navegue até **PATH_PROJETO/hex** e copie o arquivo referente a placa que estamos programando no caso **ble_app_template_pca10056_s140.hex** e cole na pasta **_build**, com isso entre na pasta pelo terminal **_build** e execute
 
 ```bash
 $ JLinkExe
