@@ -1,5 +1,5 @@
 # BLE_SKB
-<p align="center"><img src="https://images-na.ssl-images-amazon.com/images/I/81Mx3JxGdfL._SX466_.jpg"></p>
+<p align="center"><img src="https://www.segger.com/fileadmin/_processed_/8/7/csm_J-Link_PLUS_shadow_500_ddedbf89ae.png"></p>
 
 ### JLINK
 

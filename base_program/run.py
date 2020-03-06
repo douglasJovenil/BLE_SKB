@@ -1,21 +1,25 @@
+# coding: utf-8
+
 from pynput.keyboard import Key, Controller
-from time import sleep
-from os import system, chdir
-import subprocess
 from argparse import ArgumentParser
+from os import system, chdir
+from time import sleep
+import subprocess
 import sys
 
 
 def main():
     # Configura Parser
     parser = ArgumentParser(description='Serviços úteis ao se utilizar o SDK da Nordic')
-    parser.add_argument('-p', '--path', help='Caminho do projeto a ser compilado', required=True)
+    parser.add_argument('-p', '--path', help='Caminho do projeto até a pasta ARMGCC')
     parser.add_argument('-c', '--compile', action='store_true', help='Compila o firmware')
     parser.add_argument('-b', '--burn', action='store_true', help='Grava o firmware')
     parser.add_argument('-e', '--erase', action='store_true', help='Apaga a memória')
     parser.add_argument('-s', '--soft', help='Grava o softdevice, deve ser passado como parametro o nome do arquivo que se encontra na pasta hex')
+    parser.add_argument('-o', '--open', help='Abre a porta serial')
+    parser.add_argument('-f', '--find', help='Procura por um arquivo no SDK da Nordic')
 
-    #Verfica se argumentos forma passados pelo terminal
+    # Verfica se argumentos forma passados pelo terminal
     if (len(sys.argv) <= 2):
         parser.print_help()
         exit(0)
@@ -42,7 +46,7 @@ def main():
     # Processo de compilação
     if (args.compile):
         # Muda de diretorio, execute make e aguarda a finalizacao
-        chdir(f'{args.path}/pca10056/s140/armgcc')
+        chdir(args.path)
         make = subprocess.Popen('make')
         make.wait()
 
@@ -60,7 +64,7 @@ def main():
 
     # Processo de gravação
     if (args.burn):
-        addCommand('loadfile ./_build/nrf52840_xxaa.hex')
+        addCommand(f'loadfile ./_build/nrf52840_xxaa.hex')
     
     # Adiciona comandos para sair do JLinkCommander e executa todos os comandos
     if (canAddExitCommands()):
@@ -69,6 +73,14 @@ def main():
         addCommand('q')
         addCommand('exit')
         executeCommands(commands)
+
+    # Abre a porta serial
+    if (args.open):
+        system(f'pio device monitor -b 115200 -p {args.open}')
+
+    # Processo de busca
+    if (args.find):
+        system(f'find ~/nRF5_SDK -name {args.find}')
 
 
 # Função para executar todos os comandos
@@ -97,6 +109,7 @@ class Controller_d(Controller):
         self.type(msg)
         self.press_and_release(Key.enter)
         sleep(0.05)
+    
     
 if __name__ == '__main__':
     main()
